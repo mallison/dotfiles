@@ -10,6 +10,7 @@
         # TODO I wan't to restrict this to showing the date *I* last touched a branch
         ww = for-each-ref --sort=-committerdate --format='%(committerdate) %(refname:short)' refs/heads/
         unmerged = !"for b in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/); do echo $b ; git cherry origin/master $b | grep '+' | wc -l; done"
+        unpushed = log --branches --not --remotes --simplify-by-decoration --decorate --oneline
 [color]
 	ui = auto
 [push]
