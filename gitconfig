@@ -1,0 +1,16 @@
+[user]
+	name = Mark Allison
+	email = mark.allison@thebbgroup.org
+[core]
+	editor = emacs
+[alias]
+        co = checkout
+	st = status
+        tidy = !git branch --no-color --merged | grep -v master | xargs -n1 git branch -d
+        # TODO I wan't to restrict this to showing the date *I* last touched a branch
+        ww = for-each-ref --sort=-committerdate --format='%(committerdate) %(refname:short)' refs/heads/
+        unmerged = !"for b in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/); do echo $b ; git cherry origin/master $b | grep '+' | wc -l; done"
+[color]
+	ui = auto
+[push]
+	default = current
