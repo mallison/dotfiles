@@ -1,17 +1,38 @@
 [user]
 	name = Mark Allison
-	email = mark.allison@thebbgroup.org
+	email = mark@digital-impacts.org
 [core]
-	editor = emacs
+	editor = emacs --no-window
+	excludesfile = /Users/user/.gitignore_global
 [alias]
         co = checkout
 	st = status
         tidy = !git branch --no-color --merged | grep -v master | xargs -n1 git branch -d
         # TODO I wan't to restrict this to showing the date *I* last touched a branch
-        ww = for-each-ref --sort=-committerdate --format='%(committerdate) %(refname:short)' refs/heads/
+        ww = for-each-ref --sort=committerdate --format='%(committerdate) %(refname:short)' refs/remotes/
         unmerged = !"for b in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/); do echo $b ; git cherry origin/master $b | grep '+' | wc -l; done"
+        ttt = !"for b in $(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/remotes/); do echo $b ; git cherry origin/master $b | grep '+' | cut -f2 -d' ' | xargs git show; done"
         unpushed = log --branches --not --remotes --simplify-by-decoration --decorate --oneline
+	showtell = log --all --reverse --since 'last friday' --pretty=format:'%Cred%h %Creset%s %Cgreen(%cr) -%C(yellow)%d%Creset' --abbrev-commit --author='Mark Allison'
+	su = log --all --reverse --since 'midnight' --pretty=format:'%Cred%h %Creset%s %Cgreen(%cr) -%C(yellow)%d%Creset' --abbrev-commit --author='Mark Allison'
 [color]
 	ui = auto
 [push]
 	default = current
+[filter "media"]
+	required = true
+	clean = git media clean %f
+	smudge = git media smudge %f
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[difftool "diff"]
+	cmd = diff -w -W200 -y \"$LOCAL\" \"$REMOTE\" | less
+	path = /usr/bin/diff

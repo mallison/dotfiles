@@ -1,0 +1,44 @@
+Host cm1
+    HostName cm1.beatbullying.org
+    User mark
+
+Host cm3
+    HostName cm3.beatbullying.org
+    User mark
+    HostKeyAlias cm3
+    # ForwardAgent yes
+
+Host bb
+    User root
+    HostName 162.13.146.49
+
+Host eu
+    User mark
+    HostName staging.beatbullying.org
+
+Host bbuk
+    HostName cm3.beatbullying.org
+    User mark
+    DynamicForward 8080
+
+Host stats
+    HostName insight.thebbgroup.org
+    User mark
+    ForwardAgent yes
+
+Host sap
+   HostName 162.13.94.67
+   User admin
+   Port 12323
+   ForwardAgent yes
+
+Host shop
+   HostName 95.138.180.47
+   User root
+
+Host hatch
+   HostName 134.213.49.241
+   User hatch
+   Port 5522
+   ForwardAgent yes
+   
