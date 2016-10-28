@@ -1,0 +1,128 @@
+git clone git@github.com:marvelapp/redux-history-demo.git
+cd redux-history-demo/
+ls -ltr
+cd ../prototype-viewer/
+git st
+git co gh-pages
+ls -ltr
+cd ../redux-history-demo/
+cp ../prototype-viewer/*html .
+cp -r ../prototype-viewer/react-router-redux .
+git st
+git add .
+git commit -m "Silly game"
+git rm blog-redux-history-sync.html 
+git commit -m "don't need blog post"
+less index.html 
+ls -ltr react-router-redux/dist/
+git rm react-router-redux/\.*
+git st
+ls -ltr react-router-redux/dist/ReactRouterRedux.js 
+git add react-router-redux/
+git st
+git commit -m "tidy up"
+git log
+git rebase -i HEAD~4
+git rebase -i HEAD~3
+git push
+git co -b gh-pages
+git push 
+git diff
+git st
+git st
+git commit -am "Fix demo app paths"
+git push
+git co gh-pages
+ls -ltr
+git commit -am "Fix another demo app path"
+git push
+ls -ltr
+less redux-history.org 
+git st
+git log
+git co 988fa416fcb92a3c2a9794370057481606da79cc
+cat redux-history.org 
+git st
+git co -b script-wordpress-conversion
+git add org2wp.py 
+git commit -m "Script to convert org-mode post to WordPress"
+git push
+git pr
+cd ../prototype-viewer/
+git st
+git clean -f -d
+git st
+git pull
+git co -b PROT-11-first-image
+ack -i firstimage ../marvelapp_pie/
+ack -li firstimage ../marvelapp_pie/
+ack -li firstimage ../marvelapp_pie/ --type=python
+ack -li first_image ../marvelapp_pie/ --type=python
+git st
+git commit -am "WIP"
+ack debugger
+cd ../../
+npm test
+git st
+git co -b progress-bar-component
+git st
+git rm app/components/LoadingIndicator.react.js 
+git rm -f app/components/LoadingIndicator.react.js 
+git add app/components/Logo.react.js app/components/LoadingScreen.react.js 
+git add test/components/LoadingScreen.test.js 
+git st
+git add app/components/Screen.react.js 
+git st
+cd ../redux-history-demo/
+git st
+git diff
+git st
+less README.md 
+git st
+git commit -am "Link to repo from demo"
+git push
+git co master
+git diff
+git commit -am "Update README"
+git push
+git push
+git commit -am "Update README"
+git push
+cd ../prototype-viewer/
+git st
+git diff
+git reflog
+git co PROT-4-loading-screen
+git stash list
+git stash apply
+git st
+git add app
+git commit -m "WIP"
+git stash pop
+git st
+git st
+git add app/components/Screen.react.js 
+git add app/selectors/screen.js 
+git st
+git reset HEAD
+git st
+cd ../redux-history-demo/
+git st
+git st
+git commit -am "Fix blog link in README"
+git push
+cd ../redux-history-demo/
+git commit -am "Fix typo in README"
+git push
+cd ../../
+git st
+git rm app/actionCreators/device.js 
+git rm app/constants/device.js 
+ack deviceAction
+git st
+git co HEAD~1
+git co HEAD
+git st
+cd ../../../
+npm run test:watch
+npm run test:watch
