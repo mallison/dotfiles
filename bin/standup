@@ -1,0 +1,6 @@
+#!/bin/sh
+for repo in marvelapp_pie prototype-viewer; do
+    echo $repo;
+    (cd ~/marvel/$repo/ && git log --all --oneline --reverse --author='Mark' --since='9am yesterday');
+    echo;
+done;		
