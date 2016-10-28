@@ -4,6 +4,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(ido-mode t nil (ido))
+ '(inhibit-startup-screen t)
+ '(js-indent-level 2)
+ '(js-switch-indent-offset 2)
  '(org-confirm-babel-evaluate nil)
  '(show-paren-mode t))
 (custom-set-faces
@@ -16,19 +19,22 @@
 ;; https://github.com/purcell/exec-path-from-shell
 ;; only use exec-path-from-shell on OSX
 ;; this hopefully sets up path and other vars better
-(when (memq window-system '(mac ns))
-  (exec-path-from-shell-initialize))
+;;(when (memq window-system '(mac ns))
+;;  (exec-path-from-shell-initialize))
 
 (add-hook 'html-mode-hook
           (lambda()
-            (setq sgml-basic-offset 4)
+            (setq sgml-basic-offset 2)
             (setq indent-tabs-mode nil)))
 
 
 (add-hook 'js-mode-hook
           (lambda()
-            (setq js-indent-level 2)
-            (setq indent-tabs-mode nil)))
+           (setq js-indent-level 2)
+           (setq indent-tabs-mode nil)
+	    (setq-local comment-auto-fill-only-comments t)
+	    (auto-fill-mode 1)
+	    ))
 
 (put 'downcase-region 'disabled nil)
 
@@ -56,13 +62,24 @@
 (setq org-html-html5-fancy t)
 
 ;; web mode
-;;(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.html\\'" . web-mode))
 (add-to-list 'auto-mode-alist '("\\.jsx$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.react.js$" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js$" . web-mode))
 
 (setq web-mode-engines-alist
-      '(("django"    . "\\.html\\'")
+      '(
+        ("django"    . "\\.html\\'")
         )
 )
+
+(setq web-mode-content-types-alist
+      '(
+        ("jsx"  . ".*\\.react.js\\'")
+        ("jsx"  . ".*\\.js\\'")
+	)
+      )
+
 
 (defadvice web-mode-highlight-part (around tweak-jsx activate)
   (if (equal web-mode-content-type "jsx")
@@ -75,11 +92,17 @@
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-css-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
+  (setq web-mode-attr-indent-offset 2)
+  ;; doesn't work as only inserts single leading '/' :(
+;;  (setq-local comment-auto-fill-only-comments t)
   )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
-;; (add-hook 'web-mode-hook
-;;           (lambda()
-;;             (setq indent-tabs-mode nil)))
+(add-hook 'web-mode-hook
+          (lambda()
+            (setq indent-tabs-mode nil)
+	    (setq-local comment-auto-fill-only-comments t)
+	    (auto-fill-mode 1)
+	    ))
 
 
 ;; From http://codewinds.com/blog/2015-04-02-emacs-flycheck-eslint-jsx.html#customizing_indent
@@ -102,4 +125,30 @@
 (setq-default flycheck-disabled-checkers
 	      (append flycheck-disabled-checkers
 		          '(json-jsonlist)))
+
+;; https://github.com/justjake/eslint-project-relative
+(setq flycheck-javascript-eslint-executable "eslint-project-relative")
 ;; --------------------------------------------------
+
+(global-set-key (kbd "C-x f") 'find-file-in-repository)
+
+(load-theme 'atom-dark t)
+
+(setq org-publish-project-alist
+      '(("org"
+	 :base-directory "~/marvel/prototype-viewer"
+	 :publishing-directory "~/public_html"
+	 ))
+      )
+
+(require 'editorconfig)
+(editorconfig-mode 1)
+
+(dumb-jump-mode)
+
+(projectile-global-mode)
+(setq projectile-completion-system 'helm)
+(helm-projectile-on)
+(global-set-key (kbd "C-.") 'helm-imenu-anywhere)
+
+;; (add-hook 'flycheck-mode-hook 'flycheck-list-errors)
